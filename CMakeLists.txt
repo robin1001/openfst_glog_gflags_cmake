@@ -18,8 +18,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -pthread -fPIC")
 
 # glog
 FetchContent_Declare(glog
-  URL      https://github.com/google/glog/archive/v0.4.0.zip
-  URL_HASH SHA256=9e1b54eb2782f53cd8af107ecf08d2ab64b8d0dc2b7f5594472f3bd63ca85cdc
+  URL      https://github.com/google/glog/archive/v0.5.0.zip
+  URL_HASH SHA256=21bc744fb7f2fa701ee8db339ded7dce4f975d0d55837a97be7d46e8382dea5a
 )
 FetchContent_MakeAvailable(glog)
 include_directories(${glog_SOURCE_DIR}/src ${glog_BINARY_DIR})
@@ -63,27 +63,3 @@ FetchContent_Declare(openfst
 FetchContent_MakeAvailable(openfst)
 add_dependencies(fst gflags glog)
 target_link_libraries(fst PUBLIC gflags_nothreads_static glog)
-
-
-
-# set(OPENFST_CONFIGURE "--enable-bin --enable-lookahead-fsts --enable-far --enable-shared --enable-ngram-fsts")
-# set(OPENFST_CONFIGURE "--enable-lookahead-fsts")
-# set(openfst_SOURCE_DIR ${fc_base}/openfst-src CACHE PATH "OpenFST source directory")
-# set(openfst_BINARY_DIR ${fc_base}/openfst-build CACHE PATH "OpenFST build directory")
-# set(openfst_PREFIX_DIR ${fc_base}/openfst-subbuild/install CACHE PATH "OpenFST prefix directory")
-# 
-# ExternalProject_Add(openfst
-#   URL               https://github.com/mjansche/openfst/archive/1.6.5.zip
-#   URL_HASH          SHA256=b720357a464f42e181d7e33f60867b54044007f50baedc8f4458a3926f4a5a78
-#   PREFIX            ${openfst_PREFIX_DIR}
-#   SOURCE_DIR        ${openfst_SOURCE_DIR}
-#   BINARY_DIR        ${openfst_BINARY_DIR}
-#   CONFIGURE_COMMAND ${openfst_SOURCE_DIR}/configure --prefix=${openfst_PREFIX_DIR}
-#                       "CPPFLAGS=-I${gflags_BINARY_DIR}/include -I${glog_SOURCE_DIR}/src -I${glog_BINARY_DIR}"
-#                       "LDFLAGS=-L${gflags_BINARY_DIR} -L${glog_BINARY_DIR}"
-#                       "LIBS=-lgflags_nothreads -lglog -lpthread"
-#   COMMAND           ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/patch/openfst ${openfst_SOURCE_DIR}
-#   BUILD_COMMAND     make -j$(nproc)
-# )
-# add_dependencies(openfst gflags glog)
-# link_directories(${openfst_PREFIX_DIR}/lib)
