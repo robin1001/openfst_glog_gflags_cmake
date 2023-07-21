@@ -24,6 +24,7 @@ FetchContent_Declare(glog
 FetchContent_MakeAvailable(glog)
 include_directories(${glog_SOURCE_DIR}/src ${glog_BINARY_DIR})
 
+set(GFLAGS_BUILD_SHARED_LIBS ON CACHE BOOL "Build static libs" FORCE)
 # gflags
 FetchContent_Declare(gflags
   URL      https://github.com/gflags/gflags/archive/v2.2.2.zip
@@ -62,4 +63,4 @@ FetchContent_Declare(openfst
 )
 FetchContent_MakeAvailable(openfst)
 add_dependencies(fst gflags glog)
-target_link_libraries(fst PUBLIC gflags_nothreads_static glog)
+target_link_libraries(fst PUBLIC gflags_nothreads_shared glog)
