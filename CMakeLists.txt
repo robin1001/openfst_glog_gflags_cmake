@@ -36,15 +36,15 @@ add_dependencies(glog gflags)
 # Openfst is compiled with glog/gflags to avoid log and flag conflicts with log and flags in wenet/libtorch.
 # To build openfst with gflags and glog, we comment out some vars of {flags, log}.h and flags.cc.
 set(HAVE_BIN ON CACHE BOOL "Build the fst binaries" FORCE)
-set(HAVE_SCRIPT OFF CACHE BOOL "Build the fstscript" FORCE)
+set(HAVE_SCRIPT ON CACHE BOOL "Build the fstscript" FORCE)
 set(HAVE_COMPACT OFF CACHE BOOL "Build compact" FORCE)
-set(HAVE_CONST OFF CACHE BOOL "Build const" FORCE)
+set(HAVE_CONST ON CACHE BOOL "Build const" FORCE)
 set(HAVE_GRM OFF CACHE BOOL "Build grm" FORCE)
 set(HAVE_FAR OFF CACHE BOOL "Build far" FORCE)
 set(HAVE_PDT OFF CACHE BOOL "Build pdt" FORCE)
 set(HAVE_MPDT OFF CACHE BOOL "Build mpdt" FORCE)
 set(HAVE_LINEAR OFF CACHE BOOL "Build linear" FORCE)
-set(HAVE_LOOKAHEAD OFF CACHE BOOL "Build lookahead" FORCE)
+set(HAVE_LOOKAHEAD ON CACHE BOOL "Build lookahead" FORCE)
 set(HAVE_NGRAM OFF CACHE BOOL "Build ngram" FORCE)
 set(HAVE_SPECIAL OFF CACHE BOOL "Build special" FORCE)
 
