@@ -16,23 +16,20 @@ set(FETCHCONTENT_BASE_DIR ${fc_base})
 # Keep the same with openfst, -fPIC or -fpic
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -pthread -fPIC")
 
+# gflags
+execute_process(COMMAND bash gflags.sh)
+set(gflags_DIR ${CMAKE_CURRENT_SOURCE_DIR}/gflags-2.2.2/build)
+include_directories(${gflags_DIR}/include)
+
 # glog
+set(WITH_GFLAGS ON CACHE BOOL "Build glog with gflags" FORCE)
 FetchContent_Declare(glog
   URL      https://github.com/google/glog/archive/v0.5.0.zip
   URL_HASH SHA256=21bc744fb7f2fa701ee8db339ded7dce4f975d0d55837a97be7d46e8382dea5a
 )
 FetchContent_MakeAvailable(glog)
 include_directories(${glog_SOURCE_DIR}/src ${glog_BINARY_DIR})
-
-set(GFLAGS_BUILD_SHARED_LIBS ON CACHE BOOL "Build static libs" FORCE)
-# gflags
-FetchContent_Declare(gflags
-  URL      https://github.com/gflags/gflags/archive/v2.2.2.zip
-  URL_HASH SHA256=19713a36c9f32b33df59d1c79b4958434cb005b5b47dc5400a7a4b078111d9b5
-)
-FetchContent_MakeAvailable(gflags)
-include_directories(${gflags_BINARY_DIR}/include)
-
+add_dependencies(glog gflags)
 
 # The original openfst uses GNU Build System to run configure and build.
 # So, we use "OpenFST port for Windows" to build openfst with cmake in Windows.
@@ -62,5 +59,5 @@ FetchContent_Declare(openfst
   PATCH_COMMAND cp -r ${CMAKE_CURRENT_SOURCE_DIR}/patch/openfst/CMakeLists.txt ${CMAKE_CURRENT_SOURCE_DIR}/patch/openfst/src ${openfst_SOURCE_DIR}
 )
 FetchContent_MakeAvailable(openfst)
-add_dependencies(fst gflags glog)
-target_link_libraries(fst PUBLIC gflags_nothreads_shared glog)
+add_dependencies(fst glog)
+target_link_libraries(fst PUBLIC glog)
